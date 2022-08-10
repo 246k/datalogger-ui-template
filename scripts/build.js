@@ -1,6 +1,6 @@
 const Path = require('path');
 const Chalk = require('chalk');
-const FileSystem = require('fs');
+// const FileSystem = require('fs');
 const compileTs = require('./private/tsc');
 
 function buildRenderer() {
@@ -19,10 +19,10 @@ function buildMain() {
     return compileTs(mainPath);
 }
 
-FileSystem.rmSync(Path.join(__dirname, '..', 'build'), {
-    recursive: true,
-    force: true,
-})
+// FileSystem.rmSync(Path.join(__dirname, '..', 'build'), {
+//     recursive: true,
+//     force: true,
+// })
 
 console.log(Chalk.blueBright('Transpiling renderer & main...'));
 

@@ -10,27 +10,30 @@ export default defineComponent({
     return {
       port: '',
       response: [],
-      errorMessage: ''
+      errorMessage: '',
+      endpoint: ''
     }
   },
   methods: {
     sendRequest() {
-      if(this.port){
-        fetch("http://localhost:" + this.port + '/latest')
-          .then(async response => {
-            const data = await response.json();
+      // if(this.port){
+        // fetch("https://localhost:" + this.port + '/getLatestValue/all')
+        if(this.endpoint){
+          fetch(this.endpoint)
+            .then(async response => {
+              const data = await response.json();
 
-            if (!response.ok) {
-              const error = (data && data.message) || response.statusText;
-              return Promise.reject(error);
-            }
+              if (!response.ok) {
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+              }
 
-            this.response = data;
-          })
-          .catch(error => {
-            this.errorMessage = error;
-            console.error("There was an error!", error);
-          });
+              this.response = data;
+            })
+            .catch(error => {
+              this.errorMessage = error;
+              console.error("There was an error!", error);
+            });
       }
     }
   },
@@ -44,13 +47,13 @@ export default defineComponent({
 
 <template>
   <div id="app">
-    <h1>Get Latest Values</h1>
-    <input v-model="port" placeholder="Enter Port" />
-    <input id="sendButton" type="submit" value="search" @click="sendRequest()">
+    <h1>Get Response</h1>
+    <input v-model="endpoint" placeholder="Enter Endpoint" />
+    <input id="sendButton" type="submit" value="Send Request" @click="sendRequest()">
     <div v-if="response">
       <h2>Response:</h2>
       <p>{{ response }}</p>
     </div>
-    <Latest />
+    <!-- <Latest /> -->
   </div>
 </template>
